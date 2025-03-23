@@ -2,35 +2,36 @@
   "env": {
     "browser": true,
     "es2021": true,
-    "node": true,
-    "jest": true
+    "node": true
   },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended"
-  ],
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": 12,
-    "sourceType": "module"
-  },
-  "plugins": [
-    "react"
+    "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
-    "react/prop-types": "off",
-    "react/react-in-jsx-scope": "off",
-    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
-    "no-console": ["warn", { "allow": ["warn", "error"] }],
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "no-restricted-imports": ["error", {
+      "patterns": [
+        {
+          "group": ["mongoose*", "mongodb*", "sequelize*", "*typeorm*", "*prisma*"],
+          "message": "Database usage is not allowed in this project. Please use CSV files for data storage."
+        }
+      ]
+    }],
+    "no-restricted-modules": ["error", {
+      "patterns": ["mongoose*", "mongodb*", "sequelize*", "*typeorm*", "*prisma*"]
+    }],
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "CallExpression[callee.name=/Database|Mongoose|MongoDB|Sequelize|TypeORM|Prisma/]",
+        "message": "Database operations are not allowed in this project. Please use CSV files for data storage."
+      }
+    ]
   },
   "settings": {
     "react": {
       "version": "detect"
     }
   }
-}
+} 
