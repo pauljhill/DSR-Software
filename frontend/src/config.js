@@ -1,21 +1,19 @@
 /**
- * Global configuration settings
+ * Application configuration
  */
 
 const config = {
-  // API endpoints
-  api: {
-    base: '/api',
-    shows: '/api/shows',
-    equipment: '/api/equipment',
-    pdf: '/api/pdf'
-  },
+  // API endpoint base URL
+  apiUrl: process.env.REACT_APP_API_URL || 'http://localhost:3001',
   
-  // File paths
+  // Application version
+  version: process.env.REACT_APP_VERSION || '1.0.0',
+  
+  // Paths for data files
   paths: {
-    data: '/data',
-    shows: '/data/shows',
-    templates: '/data/templates'
+    shows: '/data/shows.csv',
+    equipment: '/data/equipment.csv',
+    users: '/data/users.csv'
   }
 };
 

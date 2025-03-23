@@ -1,30 +1,14 @@
 #!/bin/bash
 
-# Restart script for frontend server
-# This script can be used to restart just the frontend server
+# Colors for output
+GREEN="\033[0;32m"
+YELLOW="\033[1;33m"
+NC="\033[0m" # No Color
 
-# Kill any existing processes on port 3000
-echo "Checking for existing processes on port 3000..."
-kill $(lsof -t -i:3000) 2>/dev/null
+echo -e "${YELLOW}Stopping any running react dev server...${NC}"
+pkill -f "react-scripts start" || true
 
-# Start frontend server
-echo "Starting frontend server..."
-npm install
+echo -e "${YELLOW}Starting frontend development server...${NC}"
 npm start &
-FRONTEND_PID=$!
 
-# Display info
-echo ""
-echo "-------------------------------------"
-echo "Frontend server is starting up!"
-echo "-------------------------------------"
-echo "Frontend URL: http://localhost:3000"
-echo "-------------------------------------"
-echo ""
-echo "Press Ctrl+C to stop the server"
-
-# Trap Ctrl+C and kill the process
-trap "kill $FRONTEND_PID; exit" INT
-
-# Wait for process to finish
-wait
+echo -e "${GREEN}Frontend server started!${NC}"
