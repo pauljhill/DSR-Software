@@ -1,0 +1,8 @@
+{
+  "name": "dsr-system",
+  "version": "1.0.0",
+  "description": "DSR Management System",
+  "scripts": {
+    "start": "cd frontend && npm start"
+  }
+}
