@@ -1,147 +1,69 @@
 # PDF Generator Documentation
 
 ## Overview
-The PDF generation system for the DSR Management System creates standardized Display Safety Record (DSR) PDFs from show data.
+This documentation covers the implementation of the PDF generation system used in the DSR application. The system is designed to generate Display Safety Record (DSR) PDF documents from show data, compliant with AS/NZS IEC 60825.3:2022.
 
-## Features
-- Generates professional PDFs with consistent branding
-- Includes all required DSR information
-- Embeds equipment specifications
-- Supports dynamic content based on show requirements
-- Creates a standardized structure for compliance with AS/NZS IEC 60825.3:2022
+## Components
 
-## Tech Stack
-- **PDFKit**: Core PDF generation library
-- **Node.js Streams**: For efficient file handling
-- **fs-extra**: For file system operations
+### 1. PDF Service Module (`pdf-service.js`)
+The main module that handles PDF generation, form filling, and updates for DSR documents.
 
-## PDF Structure
+### 2. Template Creator (`create-template.js`)
+A utility script that creates the PDF template with placeholders for data fields.
 
-### 1. Header
-- RayLX logo
-- Document title: "Display Safety Record"
-- Show ID and date
+## PDF Generation Process
 
-### 2. Show Information
-- Show name and venue
-- Date and times
-- Client information
-- Location details
+### 1. Data Collection
+- Show data is read from `shows.csv`
+- Equipment details are retrieved from `equipment.csv`
+- User information is collected from `users.csv`
 
-### 3. LSO Information
-- LSO name and contact details
-- Certification status
+### 2. Template Preparation
+- A PDF template with invisible placeholders is used as the base
+- The template has multiple pages to accommodate all required information
 
-### 4. Equipment Details
-- List of equipment used
-- Technical specifications for each piece
-- Power and safety calculations
+### 3. Form Filling
+- The PDF service populates the template with actual show data
+- Special formatting is applied (dates, equipment lists, etc.)
+- Tables and lists are dynamically generated based on the data
 
-### 5. Safety Checklist
-- Venue consultation record
-- Aviation notification status
-- Safety measures implemented
-- Emergency procedures
+### 4. PDF Output
+- The filled PDF is saved to the show's folder as `dsr.pdf`
+- A record of the generation is added to the change log
 
-### 6. Post-Show Information
-- Client feedback
-- Issues encountered
-- Notes for future shows
+## Background PDF Update Process
 
-### 7. Appendices
-- Equipment specification sheets
-- Venue diagrams (if provided)
+- The server runs a background task that checks for shows needing PDF updates
+- When show data changes, the corresponding DSR is automatically regenerated
+- This ensures PDFs are always in sync with the CSV data
 
-## Usage
-
-```javascript
-const pdfGenerator = require('./pdf-service');
-
-// Generate PDF for a show
-pdfGenerator.generateShowPDF(showId)
-  .then(pdfPath => {
-    console.log(`PDF generated at: ${pdfPath}`);
-  })
-  .catch(err => {
-    console.error('PDF generation failed:', err);
-  });
-```
-
-## Functions
+## Key Functions
 
 ### `generateShowPDF(showId)`
-Generates a complete PDF for the specified show.
+Generates a PDF for a specific show based on its ID.
 
-**Parameters:**
-- `showId` (String): The ID of the show to generate a PDF for
+### `checkAndUpdatePDFs()`
+Background process that checks for and updates any PDFs that need regeneration.
 
-**Returns:**
-- Promise that resolves with the path to the generated PDF
+### `parseAndExpandEquipmentList(equipmentListString)`
+Parses equipment strings and expands them with detailed information from the equipment database.
 
-### `updateShowPDF(showId)`
-Updates an existing PDF when show details change.
+## Implementation Notes
 
-**Parameters:**
-- `showId` (String): The ID of the show to update
+1. **PDF Library**: We use `pdf-lib` for PDF manipulation
+2. **Font Support**: The PDF generator uses custom fonts registered with fontkit
+3. **Error Handling**: Detailed error logging for PDF generation issues
+4. **Performance**: The PDF generation happens asynchronously to prevent blocking the main thread
 
-**Returns:**
-- Promise that resolves with the path to the updated PDF
+## Debugging
 
-### `generateEquipmentPDF(equipmentId)`
-Generates a specification sheet for a specific piece of equipment.
+- Logging is enabled for PDF operations in `equipment-debug.log`
+- PDF generation errors are logged in the server console
+- Failed PDF generations are retried automatically
 
-**Parameters:**
-- `equipmentId` (String): The ID of the equipment
+## Future Improvements
 
-**Returns:**
-- Promise that resolves with the path to the generated equipment PDF
-
-## Styling
-
-The PDF styling is controlled through a combination of PDFKit options and custom functions. Key style elements include:
-
-- **Fonts**: Main text uses Helvetica, headers use Helvetica-Bold
-- **Colors**: 
-  - Primary: #003366 (dark blue)
-  - Secondary: #FF6600 (orange)
-  - Text: #333333 (dark gray)
-- **Page size**: A4 portrait
-- **Margins**: 40 points on all sides
-
-## Troubleshooting
-
-### Common Issues
-
-1. **PDF generation fails with data error**: 
-   - Ensure all required show data fields are present
-   - Check for malformed data in the CSV files
-
-2. **PDF is missing equipment details**:
-   - Verify equipment IDs exist in equipment.csv
-   - Check equipment list format in the show record
-
-3. **Images not appearing**:
-   - Confirm logo file path is correct
-   - Verify image files are in supported formats (PNG, JPEG)
-
-### Debugging
-
-Set DEBUG environment variable to see detailed logging:
-
-```bash
-DEBUG=pdf:* node server.js
-```
-
-## Future Enhancements
-
-1. Digital signatures for LSO approval
-2. Automated email distribution of PDFs
-3. QR codes linking to online records
-4. Additional language support
-5. Interactive form elements
-
-## Notes
-
-- PDFs are stored in the show folder along with the change log
-- Each PDF generation creates a backup of any existing PDF
-- PDF filenames follow the pattern: `dsr.pdf` (current) and `dsr-YYYYMMDD-HHMMSS.pdf` (backups)
+- Add support for custom templates
+- Implement PDF form filling for interactive forms
+- Add more visualization options (charts, diagrams)
+- Optimize PDF generation for large equipment lists
