@@ -1,0 +1,21 @@
+---
+description: Initial rules for the AI assistant
+globs: 
+alwaysApply: true
+---
+
+# Quick Start Guide
+
+## Welcome to the DSR Management System
+
+This is a specialized system for managing Display Safety Records (DSRs) for laser shows.
+
+## Key Files
+- `PROJECT.md` - Overview of the entire project
+- `PROGRAM_SPEC.md` - Detailed specifications
+- `system_functionality.md` - Description of system features
+
+## Getting Started
+- Read the documentation files first
+- Follow the nocode.mdc rules
+- Use the appropriate development practices
