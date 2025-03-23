@@ -1,136 +1,147 @@
 # PDF Generator Documentation
 
 ## Overview
+The PDF generation system for the DSR Management System creates standardized Display Safety Record (DSR) PDFs from show data.
 
-The PDF generation system is designed to create standardized DSR (Dangerous Substances Record) forms for shows. It takes show data from CSV files and creates a PDF document with all relevant information filled in.
+## Features
+- Generates professional PDFs with consistent branding
+- Includes all required DSR information
+- Embeds equipment specifications
+- Supports dynamic content based on show requirements
+- Creates a standardized structure for compliance with AS/NZS IEC 60825.3:2022
 
-## Components
+## Tech Stack
+- **PDFKit**: Core PDF generation library
+- **Node.js Streams**: For efficient file handling
+- **fs-extra**: For file system operations
 
-### 1. PDF Service Module (`pdf-service.js`)
+## PDF Structure
 
-The core functionality is in the PDF service module, which contains the following key functions:
+### 1. Header
+- RayLX logo
+- Document title: "Display Safety Record"
+- Show ID and date
 
-#### `readCSVFile(filePath)`
+### 2. Show Information
+- Show name and venue
+- Date and times
+- Client information
+- Location details
 
-Reads and parses a CSV file, returning an array of objects with column headers as keys.
+### 3. LSO Information
+- LSO name and contact details
+- Certification status
 
-#### `parseAndExpandEquipmentList(equipmentString)`
+### 4. Equipment Details
+- List of equipment used
+- Technical specifications for each piece
+- Power and safety calculations
 
-Parses a string of equipment (e.g., "8 x ClubMax 1800 RGB; 4.x Chauvet Geyser") and expands it into detailed objects with:
-- Quantity
-- Brand
-- Model
-- Power output
-- NOHD (Nominal Ocular Hazard Distance)
-- Wavelengths
+### 5. Safety Checklist
+- Venue consultation record
+- Aviation notification status
+- Safety measures implemented
+- Emergency procedures
 
-This function loads equipment data from the equipment database CSV and matches each item to get its specifications.
+### 6. Post-Show Information
+- Client feedback
+- Issues encountered
+- Notes for future shows
 
-#### `generateShowPDF(showId)`
-
-Main function that generates a PDF for a specific show:
-1. Reads show data from shows.csv
-2. Loads the PDF template
-3. Calls fillPDFForm to populate the template with show data
-4. Saves the filled PDF to the show's folder
-
-#### `fillPDFForm(pdfBytes, formData)`
-
-Takes a PDF template and form data, and populates the PDF form fields with the data:
-1. Processes the equipment list if present
-2. Fills in all form fields based on field names matching keys in formData
-
-#### `updateShowPDFFlag(showId, hasGeneratedPDF)`
-
-Updates the shows.csv file to mark a show as having a generated PDF.
-
-### 2. Express API Endpoint (`server.js`)
-
-```javascript
-app.post('/api/pdf/generate/:id', async (req, res) => {
-  try {
-    const showId = req.params.id;
-    logger.info(`Generating PDF for show ${showId}`);
-    
-    const pdfPath = await generateShowPDF(showId);
-    
-    if (pdfPath) {
-      // Update the show record to mark PDF as generated
-      await updateShowPDFFlag(showId, true);
-      
-      logger.info(`PDF generated successfully: ${pdfPath}`);
-      res.json({ success: true, message: 'PDF generated successfully', pdfPath });
-    } else {
-      logger.error(`Failed to generate PDF for show ${showId}`);
-      res.status(500).json({ success: false, message: 'PDF generation failed' });
-    }
-  } catch (err) {
-    logger.error(`Error generating PDF: ${err.message}`);
-    res.status(500).json({ success: false, message: err.message });
-  }
-});
-```
-
-## PDF Template
-
-The system uses a pre-designed PDF template with form fields. The template is located at `/data/templates/dsr_template.pdf`. 
-
-Field names in the template should match the property names in the shows.csv file for automatic population.
-
-## Equipment Expansion
-
-One key feature is the expansion of equipment notation. For example:
-
-```
-8 x ClubMax 1800 RGB
-```
-
-Is expanded to objects containing:
-
-```json
-{
-  "quantity": 8,
-  "brand": "Kvant",
-  "model": "ClubMax 1800 RGB",
-  "power": "1800mW",
-  "nohd": "450m",
-  "wavelengths": "638nm, 520nm, 450nm"
-}
-```
-
-This allows for detailed equipment information in the generated PDF.
+### 7. Appendices
+- Equipment specification sheets
+- Venue diagrams (if provided)
 
 ## Usage
 
-To generate a PDF for a show:
+```javascript
+const pdfGenerator = require('./pdf-service');
 
-```
-POST /api/pdf/generate/:showId
-```
-
-For example:
-
-```
-curl -X POST http://localhost:3001/api/pdf/generate/SH001
-```
-
-The response will include the path to the generated PDF:
-
-```json
-{
-  "success": true,
-  "message": "PDF generated successfully",
-  "pdfPath": "/data/shows/SH001-base_makes_the_face/dsr.pdf"
-}
+// Generate PDF for a show
+pdfGenerator.generateShowPDF(showId)
+  .then(pdfPath => {
+    console.log(`PDF generated at: ${pdfPath}`);
+  })
+  .catch(err => {
+    console.error('PDF generation failed:', err);
+  });
 ```
 
-## Error Handling
+## Functions
 
-The system includes error handling for:
-- Missing shows
-- Missing template files
-- Issues with PDF generation
-- Issues with form filling
-- Equipment not found in the database
+### `generateShowPDF(showId)`
+Generates a complete PDF for the specified show.
 
-All errors are logged to the server log file.
+**Parameters:**
+- `showId` (String): The ID of the show to generate a PDF for
+
+**Returns:**
+- Promise that resolves with the path to the generated PDF
+
+### `updateShowPDF(showId)`
+Updates an existing PDF when show details change.
+
+**Parameters:**
+- `showId` (String): The ID of the show to update
+
+**Returns:**
+- Promise that resolves with the path to the updated PDF
+
+### `generateEquipmentPDF(equipmentId)`
+Generates a specification sheet for a specific piece of equipment.
+
+**Parameters:**
+- `equipmentId` (String): The ID of the equipment
+
+**Returns:**
+- Promise that resolves with the path to the generated equipment PDF
+
+## Styling
+
+The PDF styling is controlled through a combination of PDFKit options and custom functions. Key style elements include:
+
+- **Fonts**: Main text uses Helvetica, headers use Helvetica-Bold
+- **Colors**: 
+  - Primary: #003366 (dark blue)
+  - Secondary: #FF6600 (orange)
+  - Text: #333333 (dark gray)
+- **Page size**: A4 portrait
+- **Margins**: 40 points on all sides
+
+## Troubleshooting
+
+### Common Issues
+
+1. **PDF generation fails with data error**: 
+   - Ensure all required show data fields are present
+   - Check for malformed data in the CSV files
+
+2. **PDF is missing equipment details**:
+   - Verify equipment IDs exist in equipment.csv
+   - Check equipment list format in the show record
+
+3. **Images not appearing**:
+   - Confirm logo file path is correct
+   - Verify image files are in supported formats (PNG, JPEG)
+
+### Debugging
+
+Set DEBUG environment variable to see detailed logging:
+
+```bash
+DEBUG=pdf:* node server.js
+```
+
+## Future Enhancements
+
+1. Digital signatures for LSO approval
+2. Automated email distribution of PDFs
+3. QR codes linking to online records
+4. Additional language support
+5. Interactive form elements
+
+## Notes
+
+- PDFs are stored in the show folder along with the change log
+- Each PDF generation creates a backup of any existing PDF
+- PDF filenames follow the pattern: `dsr.pdf` (current) and `dsr-YYYYMMDD-HHMMSS.pdf` (backups)
