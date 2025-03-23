@@ -1,14 +1,12 @@
 #!/bin/bash
 
-# Colors for output
-GREEN="\033[0;32m"
-YELLOW="\033[1;33m"
-NC="\033[0m" # No Color
+echo "Creating symlinks for data files..."
+mkdir -p ./public/data
+rm -f ./public/data/*.csv
+ln -sf ../../data/*.csv ./public/data/
 
-echo -e "${YELLOW}Stopping any running react dev server...${NC}"
+echo "Stopping any running instances..."
 pkill -f "react-scripts start" || true
 
-echo -e "${YELLOW}Starting frontend development server...${NC}"
-npm start &
-
-echo -e "${GREEN}Frontend server started!${NC}"
+echo "Restarting React development server..."
+npm start 
