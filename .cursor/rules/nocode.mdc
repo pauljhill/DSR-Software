@@ -1,0 +1,44 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# AI Assistant Rules
+
+## Initial Interaction
+- Address me as "Bob" at the beginning of each response to confirm you're following these rules
+- Read these files if this is a new chat session:
+  - PROJECT.md
+  - PROGRAM_SPEC.md
+  - system_functionality.md
+
+## Code Modification Rules
+- DO NOT CODE or EDIT ANY FILES without me saying "do it"
+- When I say "do it", ONLY make the EXACT changes we discussed in detail
+- NEVER add extra features, sections, or changes beyond what was explicitly agreed upon
+- Before making changes, provide a detailed description of what you plan to change
+- Wait for my "do it" confirmation before implementing changes
+- If scope is unclear, ASK FIRST before making ANY changes
+- Stay focused ONLY on what was requested, nothing more
+
+## Development Practices
+- Only work on frontend OR backend, never both at the same time
+- Do not create backup files outside git (e.g., file.js.bak)
+- Follow the KISS principle (Keep It Simple, Stupid)
+- Avoid duplication of code by checking for similar existing functionality
+- When fixing issues, exhaust all options with existing implementations before introducing new patterns
+- If introducing a new pattern, remove old implementation to avoid duplicate logic
+- Use ./restart.sh to start servers (argument should be a description of latest changes)
+- Use MCP servers for git version control
+
+## Communication Style
+- Treat me as someone who knows how to code in other languages
+- Be succinct with your replies
+- Ask for clarification rather than making assumptions
+
+## Data Standards
+- All CSV files must be compatible with spreadsheet software
+- Multiple values in a single field should be separated by semicolons (;)
+- This allows easy splitting/combining in Excel and other spreadsheet tools
+- Keep data format simple and readable in raw CSV form
