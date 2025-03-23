@@ -1,38 +1,74 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import {
+  Box,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListItemButton,
+} from '@mui/material';
+import {
+  Dashboard as DashboardIcon,
+  People as PeopleIcon,
+  Construction as ConstructionIcon,
+  Theaters as ShowsIcon,
+  TableView as CSVIcon,
+  Storage as DataIcon,
+} from '@mui/icons-material';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-const Sidebar = ({ menuItems }) => {
+const drawerWidth = 240;
+
+const menuItems = [
+  { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
+  { text: 'Shows', icon: <ShowsIcon />, path: '/shows' },
+  { text: 'Equipment', icon: <ConstructionIcon />, path: '/equipment' },
+  { text: 'Users', icon: <PeopleIcon />, path: '/users' },
+  { text: 'Data Viewer', icon: <DataIcon />, path: '/data-view' },
+];
+
+export default function Sidebar({ open }) {
+  const navigate = useNavigate();
   const location = useLocation();
 
   return (
-    <nav style={{
-      width: '200px',
-      backgroundColor: '#f5f5f5',
-      padding: '20px 0',
-      minHeight: 'calc(100vh - 60px)'
-    }}>
-      <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-        {menuItems.map((item, index) => (
-          <li key={index} style={{ marginBottom: '10px' }}>
-            <Link
-              to={item.path}
-              style={{
-                display: 'block',
-                padding: '10px 20px',
-                textDecoration: 'none',
-                color: location.pathname === item.path ? '#3498db' : '#333',
-                backgroundColor: location.pathname === item.path ? '#e6f0f7' : 'transparent',
-                borderLeft: location.pathname === item.path ? '4px solid #3498db' : '4px solid transparent',
-                fontWeight: location.pathname === item.path ? 'bold' : 'normal'
-              }}
-            >
-              {item.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <Drawer
+      variant="persistent"
+      anchor="left"
+      open={open}
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': {
+          width: drawerWidth,
+          boxSizing: 'border-box',
+          top: ['48px', '56px', '64px'],
+          height: 'auto',
+          bottom: 0,
+        },
+      }}
+    >
+      <Box sx={{ overflow: 'auto', mt: 2 }}>
+        <List>
+          {menuItems.map((item) => (
+            <ListItem key={item.text} disablePadding>
+              <ListItemButton
+                selected={location.pathname === item.path}
+                onClick={() => navigate(item.path)}
+              >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
+    </Drawer>
   );
-};
+}
 
-export default Sidebar;
+Sidebar.propTypes = {
+  open: PropTypes.bool.isRequired
+};
