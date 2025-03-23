@@ -1,0 +1,15 @@
+airport_id,name,city,country,latitude,longitude,elevation
+SYD,Sydney Airport,Sydney,Australia,-33.9399,151.1753,21
+MEL,Melbourne Airport,Melbourne,Australia,-37.6690,144.8410,434
+BNE,Brisbane Airport,Brisbane,Australia,-27.3842,153.1175,4
+PER,Perth Airport,Perth,Australia,-31.9402,115.9674,67
+ADL,Adelaide Airport,Adelaide,Australia,-34.9481,138.5301,6
+CBR,Canberra Airport,Canberra,Australia,-35.3069,149.1943,577
+HBA,Hobart Airport,Hobart,Australia,-42.8361,147.5102,13
+DRW,Darwin Airport,Darwin,Australia,-12.4111,130.8769,103
+CNS,Cairns Airport,Cairns,Australia,-16.8858,145.7556,10
+OOL,Gold Coast Airport,Gold Coast,Australia,-28.1644,153.5047,21
+AKL,Auckland Airport,Auckland,New Zealand,-37.0082,174.7850,7
+CHC,Christchurch Airport,Christchurch,New Zealand,-43.4864,172.5320,37
+WLG,Wellington Airport,Wellington,New Zealand,-41.3292,174.8088,13
+ZQN,Queenstown Airport,Queenstown,New Zealand,-45.0210,168.7390,357

@@ -1,5 +1,11 @@
-id,name,date,venue,status,client,equipmentList
-SH001,Base Makes the Face,2024-03-15,Metropolis Club,Completed,DJ Events Ltd,8 x ClubMax 1800 RGB; 8 x ClubMax 3000 RGB
-SH002,Laser Symphony,2024-04-01,Grand Theater,Planned,Symphony Productions,4 x Atom 9000 RGB; 2 x DS 2000 RGB
-SH003,Neon Nights,2024-03-28,Electric Arena,In Progress,Club Promotions,6 x ClubMax 3000 RGB; 2 x Atom 9000 RGB
-SH004,Light Up 2024,2024-05-10,Stadium XL,Planned,Festival Organizers,12 x ClubMax 3000 RGB; 4 x Atom 9000 RGB; 4 x DS 2000 RGB
+show_id,show_name,show_date,venue_id,client_name,client_email,client_phone,equipmentList,folder_name,has_generated_pdf,needs_update
+SH001,Base Makes The Face,2023-10-15,V002,Defqon Productions,info@defqon.com,+61 400 123 456,"8 x ClubMax 1800 RGB; 8 x ClubMax 3000 RGB",SH001-base_makes_the_face,true,false
+SH002,Trance Fusion Festival,2023-11-01,V001,Dreamstate Events,contact@dreamstate.com,+61 422 987 654,"4 x Spectrum 30; 2 x Spectrum 33",SH002-trance_fusion,false,true
+SH003,Hardstyle Heroes,2023-12-05,V004,Q-Dance Australia,bookings@qdance.com.au,+61 412 345 678,"12 x LD 10V; 6 x Tripan; 4 x RTI Piko RGB 20",SH003-hardstyle_heroes,false,true
+SH004,Drum & Bass Collective,2024-01-15,V009,Hospital Records,events@hospitalrecords.com,+64 21 567 890,"10 x Kvant Atom 9 HPS; 4 x Kvant Clubmax 3000 FB4",SH004-dnb_collective,false,true
+SH005,Techno Warehouse,2024-02-10,V008,Underground Systems,bookings@undergroundsystems.com.au,+61 433 765 421,"16 x Lasercube; 8 x unity RAW mini",SH005-techno_warehouse,false,true
+SH006,Classical Dimensions,2024-03-20,V011,Melbourne Symphony Orchestra,productions@mso.com.au,+61 398 765 432,"6 x Kvant Spectrum 20; 2 x Laserworld Purelight Series PL-10.000RGB",SH006-classical_dimensions,false,true
+SH007,EDM Summer Festival,2024-02-28,V015,Future Sounds,info@futuresounds.com.au,+61 415 678 234,"10 x RTI PIKO RGB 14; 6 x Kvant Spectrum 30; 4 x unity RAW 3; 12 x X-Laser Mercury",SH007-edm_summer,false,true
+SH008,Rock Revolution,2024-04-05,V007,Live Nation Australia,production@livenation.com.au,+61 429 876 123,"8 x Kvant ClubMax 10 FB4; 4 x Kvant Atom 15",SH008-rock_revolution,false,true
+SH009,Corporate Launch Event,2024-05-10,V003,Tech Innovations Inc.,events@techinnovations.com,+61 400 234 567,"4 x X-Laser Skywriter HPX M-5; 2 x Kvant Spectrum 20 LD",SH009-corporate_launch,false,true
+SH010,Wedding DJ Plus,2024-06-20,V013,Elite Celebrations,bookings@elitecelebrations.com.au,+61 413 765 098,"2 x Kvant ClubMax 3000 FB4; 2 x unity RAW 1.5",SH010-wedding_dj_plus,false,true
