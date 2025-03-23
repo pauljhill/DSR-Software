@@ -1,15 +1,25 @@
-airport_id,name,city,country,latitude,longitude,elevation
-SYD,Sydney Airport,Sydney,Australia,-33.9399,151.1753,21
-MEL,Melbourne Airport,Melbourne,Australia,-37.6690,144.8410,434
-BNE,Brisbane Airport,Brisbane,Australia,-27.3842,153.1175,4
-PER,Perth Airport,Perth,Australia,-31.9402,115.9674,67
-ADL,Adelaide Airport,Adelaide,Australia,-34.9481,138.5301,6
-CBR,Canberra Airport,Canberra,Australia,-35.3069,149.1943,577
-HBA,Hobart Airport,Hobart,Australia,-42.8361,147.5102,13
-DRW,Darwin Airport,Darwin,Australia,-12.4111,130.8769,103
-CNS,Cairns Airport,Cairns,Australia,-16.8858,145.7556,10
-OOL,Gold Coast Airport,Gold Coast,Australia,-28.1644,153.5047,21
-AKL,Auckland Airport,Auckland,New Zealand,-37.0082,174.7850,7
-CHC,Christchurch Airport,Christchurch,New Zealand,-43.4864,172.5320,37
-WLG,Wellington Airport,Wellington,New Zealand,-41.3292,174.8088,13
-ZQN,Queenstown Airport,Queenstown,New Zealand,-45.0210,168.7390,357
+airport_code,airport_name,city,state_province,country,latitude,longitude,elevation_ft,is_international,contact_name,contact_email,contact_phone,notam_required,distance_from_tower_km,notification_days_required
+SYD,Sydney Kingsford Smith Airport,Sydney,NSW,Australia,-33.946111,151.177222,21,Yes,John Smith,john.smith@sydneyairport.com.au,+61-2-9667-9111,Yes,3,14
+MEL,Melbourne Airport,Melbourne,VIC,Australia,-37.673333,144.843333,434,Yes,Sarah Johnson,sarah.johnson@melbourneairport.com.au,+61-3-9297-1600,Yes,5,14
+BNE,Brisbane Airport,Brisbane,QLD,Australia,-27.384167,153.117500,13,Yes,Michael Wong,michael.wong@bne.com.au,+61-7-3406-3000,Yes,4,14
+PER,Perth Airport,Perth,WA,Australia,-31.940278,115.966944,67,Yes,Lisa Taylor,lisa.taylor@perthairport.com.au,+61-8-9478-8888,Yes,6,14
+ADL,Adelaide Airport,Adelaide,SA,Australia,-34.945000,138.530556,20,Yes,Robert Chen,robert.chen@aal.com.au,+61-8-8308-9211,Yes,3,14
+CBR,Canberra Airport,Canberra,ACT,Australia,-35.306944,149.195000,577,Yes,Jennifer Lee,jennifer.lee@canberraairport.com.au,+61-2-6275-2222,Yes,5,14
+HOB,Hobart International Airport,Hobart,TAS,Australia,-42.836111,147.510278,13,Yes,David Brown,david.brown@hobartairport.com.au,+61-3-6216-1600,Yes,4,7
+DRW,Darwin International Airport,Darwin,NT,Australia,-12.414722,130.876667,103,Yes,Paul Wilson,paul.wilson@ntairports.com.au,+61-8-8920-1811,Yes,6,14
+CNS,Cairns Airport,Cairns,QLD,Australia,-16.885833,145.755278,10,Yes,Emma Davis,emma.davis@cairnsairport.com.au,+61-7-4080-6703,Yes,4,14
+OOL,Gold Coast Airport,Gold Coast,QLD,Australia,-28.164444,153.505000,21,Yes,Thomas Martin,thomas.martin@gcal.com.au,+61-7-5589-1100,Yes,3,7
+PHE,Port Hedland International Airport,Port Hedland,WA,Australia,-20.377778,118.626389,33,No,Andrew King,andrew.king@porthedland.wa.gov.au,+61-8-9158-8400,Yes,7,14
+BTL,Bathurst Airport,Bathurst,NSW,Australia,-33.406667,149.651944,743,No,Christine White,christine.white@bathurst.nsw.gov.au,+61-2-6333-6111,Yes,2,7
+ALH,Albany Airport,Albany,WA,Australia,-34.943333,117.808889,233,No,Kevin Harris,kevin.harris@albany.wa.gov.au,+61-8-9841-4411,No,8,3
+AYQ,Ayers Rock Airport,Yulara,NT,Australia,-25.186111,130.975556,1626,No,Susan Thompson,susan.thompson@voyages.com.au,+61-8-8956-2030,Yes,10,14
+NTL,Newcastle Airport,Newcastle,NSW,Australia,-32.794722,151.834444,31,Yes,Peter Williams,peter.williams@newcastleairport.com.au,+61-2-4928-9800,Yes,4,7
+SUN,Sunshine Coast Airport,Maroochydore,QLD,Australia,-26.603333,153.091389,15,Yes,Rachel Green,rachel.green@sunshinecoastairport.com.au,+61-7-5453-1500,Yes,5,7
+MKY,Mackay Airport,Mackay,QLD,Australia,-21.171667,149.179722,19,No,James Taylor,james.taylor@mackayairport.com.au,+61-7-4957-0201,Yes,6,7
+TSV,Townsville Airport,Townsville,QLD,Australia,-19.252500,146.765278,18,Yes,Jessica Adams,jessica.adams@townsvilleairport.com.au,+61-7-4727-3211,Yes,5,14
+LST,Launceston Airport,Launceston,TAS,Australia,-41.545278,147.214167,562,No,Daniel Roberts,daniel.roberts@lst.com.au,+61-3-6391-6222,Yes,4,7
+ESA,RAAF Base East Sale,East Sale,VIC,Australia,-38.098889,147.149444,23,No,Wing Commander Anderson,wg.cdr.anderson@defence.gov.au,+61-3-5146-6222,Yes,0,30
+PHP,Philip Island Airfield,Philip Island,VIC,Australia,-38.526389,145.496667,32,No,Gary Robinson,gary.robinson@phillipislandairfield.com.au,+61-3-5952-2201,No,15,3
+HTI,Hamilton Island Airport,Hamilton Island,QLD,Australia,-20.358056,148.951667,15,No,Michelle Clark,michelle.clark@hamiltonisland.com.au,+61-7-4946-9999,Yes,8,7
+BCK,Blackwater Aerodrome,Blackwater,QLD,Australia,-23.603056,148.807222,657,No,Brian Cooper,brian.cooper@centralhighlands.qld.gov.au,+61-7-4982-8100,No,12,3
+ASP,Alice Springs Airport,Alice Springs,NT,Australia,-23.806944,133.902222,1789,Yes,Stephanie Morris,stephanie.morris@ntairports.com.au,+61-8-8951-1211,Yes,7,14
