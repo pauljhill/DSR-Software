@@ -1,38 +1,33 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import Navbar from './layout/Navbar';
-import Sidebar from './layout/Sidebar';
-import Dashboard from '../pages/Dashboard';
-import ShowsManagement from '../pages/ShowsManagement';
-import ShowEdit from '../pages/ShowEdit';
-import EquipmentManagement from '../pages/EquipmentManagement';
-import UserManagement from '../pages/UserManagement';
+import { Outlet } from 'react-router-dom';
+import { Box, Container, CssBaseline, Toolbar } from '@mui/material';
+import Sidebar from './Sidebar';
+import Header from './Header';
 
 const Layout = () => {
-  const menuItems = [
-    { label: 'Dashboard', path: '/' },
-    { label: 'Shows', path: '/shows' },
-    { label: 'Equipment', path: '/equipment' },
-    { label: 'Settings', path: '/settings' }
-  ];
-
   return (
-    <div className="app-container">
-      <Navbar />
-      <div className="content-container" style={{ display: 'flex' }}>
-        <Sidebar menuItems={menuItems} />
-        <main style={{ flexGrow: 1, padding: '20px' }}>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/shows" element={<ShowsManagement />} />
-            <Route path="/shows/:id" element={<ShowEdit />} />
-            <Route path="/equipment" element={<EquipmentManagement />} />
-            <Route path="/users" element={<UserManagement />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </main>
-      </div>
-    </div>
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <Header />
+      <Sidebar />
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === 'light'
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          flexGrow: 1,
+          height: '100vh',
+          overflow: 'auto',
+        }}
+      >
+        <Toolbar />
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Outlet />
+        </Container>
+      </Box>
+    </Box>
   );
 };
 
