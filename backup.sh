@@ -1,32 +1,22 @@
 #!/bin/bash
 
-# Define the source directory (your project)
-SOURCE_DIR="/home/tech/DSR"
+# Create backup script for DSR project
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+BACKUP_DIR="/home/tech/backup/DSR_backup_${TIMESTAMP}"
 
-# Define the backup directory
-BACKUP_DIR="/mnt/backup/DSR_backups"
+echo "Creating backup of DSR project to ${BACKUP_DIR}"
 
-# Create a timestamp for the backup folder
-TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+# Create backup directory
+mkdir -p ${BACKUP_DIR}
 
-# Create the backup folder with timestamp
-BACKUP_FOLDER="$BACKUP_DIR/backup_$TIMESTAMP"
-mkdir -p "$BACKUP_FOLDER"
+# Copy all project files
+cp -R /home/tech/DSR/* ${BACKUP_DIR}/
 
-# Define colors for output
-GREEN="\033[0;32m"
-YELLOW="\033[1;33m"
-NC="\033[0m" # No Color
+# Create backup log
+echo "Backup created on $(date)" > ${BACKUP_DIR}/backup_info.txt
+echo "Source: /home/tech/DSR" >> ${BACKUP_DIR}/backup_info.txt
+echo "Files included:" >> ${BACKUP_DIR}/backup_info.txt
+find /home/tech/DSR -type f | grep -v "node_modules" | sort >> ${BACKUP_DIR}/backup_info.txt
 
-echo -e "${YELLOW}Starting backup process...${NC}"
-
-# Copy the project files to the backup folder
-rsync -av --exclude="node_modules" --exclude=".git" "$SOURCE_DIR/" "$BACKUP_FOLDER/"
-
-# Check if the backup was successful
-if [ $? -eq 0 ]; then
-    echo -e "${GREEN}Backup completed successfully to:${NC} $BACKUP_FOLDER"
-else
-    echo -e "\033[0;31mBackup failed!\033[0m"
-    exit 1
-fi
+echo "Backup completed successfully to ${BACKUP_DIR}"
+echo "Total size of backup: $(du -sh ${BACKUP_DIR} | cut -f1)"
