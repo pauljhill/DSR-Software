@@ -1,0 +1,5 @@
+id,name,date,venue,status,client,equipmentList
+SH001,Base Makes the Face,2024-03-15,Metropolis Club,Completed,DJ Events Ltd,8 x ClubMax 1800 RGB; 8 x ClubMax 3000 RGB
+SH002,Laser Symphony,2024-04-01,Grand Theater,Planned,Symphony Productions,4 x Atom 9000 RGB; 2 x DS 2000 RGB
+SH003,Neon Nights,2024-03-28,Electric Arena,In Progress,Club Promotions,6 x ClubMax 3000 RGB; 2 x Atom 9000 RGB
+SH004,Light Up 2024,2024-05-10,Stadium XL,Planned,Festival Organizers,12 x ClubMax 3000 RGB; 4 x Atom 9000 RGB; 4 x DS 2000 RGB
