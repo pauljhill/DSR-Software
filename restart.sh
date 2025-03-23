@@ -1,64 +1,54 @@
 #!/bin/bash
 
-# Check if an argument was provided
-if [ $# -eq 0 ]; then
-    echo "Error: Please provide a commit message describing the changes."
-    echo "Usage: $0 'Your commit message here'"
-    exit 1
-fi
+# Get the backup name from the first argument or use date-time if not provided
+BACKUP_NAME="${1:-restart_$(date +"%Y%m%d_%H%M%S")}"
 
-# Store the commit message
-COMMIT_MESSAGE="$1"
+echo "🔄 Restarting servers..."
 
-# Define colors for output
-GREEN="\033[0;32m"
-YELLOW="\033[1;33m"
-RED="\033[0;31m"
-NC="\033[0m" # No Color
+# Kill any existing servers
+echo "🛑 Stopping existing servers..."
+echo "Stopping processes on ports 3000 (frontend) and 3001 (backend)..."
+pkill -f "node server.js" || true
+lsof -ti :3000,3001 | xargs -r kill -9 || true
 
-# Function to display a step with colorized output
-display_step() {
-    echo -e "${YELLOW}[STEP]${NC} $1"
-}
+# Wait a moment to ensure ports are freed
+echo "⏱️ Waiting for ports to be released..."
+sleep 2
 
-# Function to display success messages
-display_success() {
-    echo -e "${GREEN}[SUCCESS]${NC} $1"
-}
-
-# Function to display error messages
-display_error() {
-    echo -e "${RED}[ERROR]${NC} $1"
-}
-
-# Start the process
-echo -e "${YELLOW}========== RESTARTING SERVICES ==========${NC}"
-
-# Stop any running servers
-display_step "Stopping any running servers..."
-pkill -f "node" || true
-display_success "Servers stopped."
-
-# Pull the latest code from git
-display_step "Pulling latest code from repository..."
-git add .
-git commit -m "$COMMIT_MESSAGE"
-git pull
-display_success "Code updated."
+# Ensure data directory exists
+echo "📁 Ensuring data directories exist..."
+mkdir -p /home/tech/DSR/data/shows
 
 # Start backend server
-display_step "Starting backend server..."
-cd backend
-npm start & 
-cd ..
-display_success "Backend server started."
+echo "🚀 Starting backend server..."
+cd /home/tech/DSR/backend
+HOST=0.0.0.0 node server.js > /home/tech/DSR/backend/server.log 2>&1 &
+BACKEND_PID=$!
+echo "Backend server started with PID: $BACKEND_PID"
+
+# Wait for backend to initialize
+echo "⏱️ Waiting for backend to initialize..."
+sleep 3
 
 # Start frontend server
-display_step "Starting frontend server..."
-cd frontend
-npm start &
-cd ..
-display_success "Frontend server started."
+echo "🚀 Starting frontend server..."
+cd /home/tech/DSR/frontend
+HOST=0.0.0.0 npm start > /home/tech/DSR/frontend/frontend.log 2>&1 &
+FRONTEND_PID=$!
+echo "Frontend server started with PID: $FRONTEND_PID"
 
-echo -e "${GREEN}========== ALL SERVICES RESTARTED ==========${NC}"
-echo -e "${GREEN}Commit message: ${NC}$COMMIT_MESSAGE"
+# Get the local IP address
+LOCAL_IP=$(hostname -I | awk '{print $1}')
+
+echo "✨ Servers restarted successfully!"
+echo "📌 Frontend: http://localhost:3000 or http://$LOCAL_IP:3000"
+echo "📌 Backend: http://localhost:3001 or http://$LOCAL_IP:3001"
+echo "📝 Logs:"
+echo "   - Backend: /home/tech/DSR/backend/server.log"
+echo "   - Frontend: /home/tech/DSR/frontend/frontend.log"
+
+# Run backup after restarting (in background) using the new backkup.sh script
+echo "📦 Starting project backup in background with name: $BACKUP_NAME..."
+cd /home/tech/DSR
+./backkup.sh "$BACKUP_NAME" > /home/tech/DSR-backups/backup.log 2>&1 &
+echo "📦 Backup process started in background (see /home/tech/DSR-backups/backup.log for details)"
