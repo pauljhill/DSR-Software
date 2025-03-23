@@ -1,20 +1,14 @@
-/**
- * Application configuration
- */
-
-const config = {
-  // API endpoint base URL
-  apiUrl: process.env.REACT_APP_API_URL || 'http://localhost:3001',
+// Determine the backend URL based on the current hostname
+const getBackendUrl = () => {
+  const hostname = window.location.hostname;
   
-  // Application version
-  version: process.env.REACT_APP_VERSION || '1.0.0',
-  
-  // Paths for data files
-  paths: {
-    shows: '/data/shows.csv',
-    equipment: '/data/equipment.csv',
-    users: '/data/users.csv'
+  // If we're on localhost, use localhost for the backend
+  if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    return 'http://localhost:3001';
   }
+  
+  // Otherwise, use the same hostname but with port 3001
+  return `http://${hostname}:3001`;
 };
 
-export default config;
+export const BACKEND_URL = getBackendUrl(); 
